@@ -2711,6 +2711,8 @@
     <binaryExtension implementation="org.jetbrains.kotlin.idea.util.KotlinBuiltInBinary"/>
     <binaryExtension implementation="org.jetbrains.kotlin.idea.util.KotlinModuleBinary"/>
     <binaryExtension implementation="org.jetbrains.kotlin.idea.util.KotlinJsMetaBinary"/>
+
+    <highlighterExtension implementation="org.jetbrains.kotlin.idea.highlighter.dsl.KotlinXHtmlCustomHighlighter"/>
   </extensions>
 
 </idea-plugin>
