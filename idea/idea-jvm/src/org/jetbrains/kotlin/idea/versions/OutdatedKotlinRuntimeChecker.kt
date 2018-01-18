@@ -87,6 +87,8 @@ fun collectModulesWithOutdatedRuntime(libraries: List<VersionedLibrary>): List<M
 
 fun notifyOutdatedKotlinRuntime(project: Project, outdatedLibraries: Collection<VersionedLibrary>) {
     val pluginVersion = KotlinPluginUtil.getPluginVersion()
+
+    val canUpdate = !hasNonJPSModules(project)
     val message: String = if (outdatedLibraries.size == 1) {
         val versionedLibrary = outdatedLibraries.first()
 
@@ -96,15 +98,14 @@ fun notifyOutdatedKotlinRuntime(project: Project, outdatedLibraries: Collection<
 
         "<p>Your version of Kotlin runtime in '$libraryName' library is $readableVersion, while plugin version is $pluginVersion.</p>" +
                 "<p>Runtime library should be updated to avoid compatibility problems.</p>" +
-                "<p><a href=\"update\">Update Runtime</a> <a href=\"ignore\">Ignore</a></p>"
+                "<p>${if (canUpdate) "<a href=\"update\">Update Runtime</a> " else ""}<a href=\"ignore\">Ignore</a></p>"
     } else {
         val libraryNames = outdatedLibraries.joinToString { it.library.name ?: "unknown library" }
 
         "<p>Version of Kotlin runtime is outdated in several libraries ($libraryNames). Plugin version is $pluginVersion.</p>" +
                 "<p>Runtime libraries should be updated to avoid compatibility problems.</p>" +
-                "<p><a href=\"update\">Update All</a> <a href=\"ignore\">Ignore</a></p>"
+                "<p>${if (canUpdate) "<a href=\"update\">Update All</a> " else ""}<a href=\"ignore\">Ignore</a></p>"
     }
-
 
     Notifications.Bus.notify(
         Notification(

@@ -20,8 +20,12 @@ import org.jetbrains.kotlin.idea.util.projectStructure.allModules
 import java.io.File
 import java.io.IOException
 
+fun hasNonJPSModules(project: Project): Boolean {
+    return project.allModules().any { module -> module.getBuildSystemType() != BuildSystemType.JPS }
+}
+
 fun updateLibraries(project: Project, libraries: Collection<Library>) {
-    if (project.allModules().any { module -> module.getBuildSystemType() != BuildSystemType.JPS }) {
+    if (hasNonJPSModules(project)) {
         Messages.showMessageDialog(
             project,
             "Automatic library version update for Maven and Gradle projects is currently unsupported. " +
@@ -96,7 +100,11 @@ private fun updateJar(
                 if (oldUrl != null) {
                     model.removeRoot(oldUrl, libraryJarDescriptor.orderRootType)
                 }
-                val newRoot = JarFileSystem.getInstance().getJarRootForLocalFile(newVFile)!!
+                val newRoot = JarFileSystem.getInstance().getJarRootForLocalFile(newVFile) ?: run {
+                    Messages.showErrorDialog(project, "Failed to find root for file: ${newVFile.canonicalPath}", "Library update failed")
+                    return@runWriteAction
+                }
+
                 model.addRoot(newRoot, libraryJarDescriptor.orderRootType)
             } finally {
                 model.commit()
