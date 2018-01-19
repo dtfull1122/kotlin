@@ -68,12 +68,19 @@ private fun updateJar(
     libraryJarDescriptor: LibraryJarDescriptor
 ) {
     val fileToReplace = libraryJarDescriptor.findExistingJar(library)
+    if (fileToReplace == null) {
+        if (libraryJarDescriptor.shouldExist) {
+            Messages.showErrorDialog(
+                project,
+                "Automatic library version update for '${library.name}' failed.\nPlease update this library manually.",
+                "Library update failed"
+            )
+        }
 
-    if (fileToReplace == null && !libraryJarDescriptor.shouldExist) {
         return
     }
 
-    val oldUrl = fileToReplace?.url
+    val oldUrl = fileToReplace.url
     val jarPath: File = libraryJarDescriptor.getPathInPlugin()
 
     if (!jarPath.exists()) {
@@ -81,7 +88,7 @@ private fun updateJar(
         return
     }
 
-    val jarFileToReplace = getLocalJar(fileToReplace)!!
+    val jarFileToReplace = getLocalJar(fileToReplace) ?: error("Couldn't find local jar for ${fileToReplace.canonicalPath}")
     val newVFile = try {
         replaceFile(jarPath, jarFileToReplace)
     } catch (e: IOException) {
@@ -97,9 +104,8 @@ private fun updateJar(
         val model = library.modifiableModel
         runWriteAction {
             try {
-                if (oldUrl != null) {
-                    model.removeRoot(oldUrl, libraryJarDescriptor.orderRootType)
-                }
+                model.removeRoot(oldUrl, libraryJarDescriptor.orderRootType)
+
                 val newRoot = JarFileSystem.getInstance().getJarRootForLocalFile(newVFile) ?: run {
                     Messages.showErrorDialog(project, "Failed to find root for file: ${newVFile.canonicalPath}", "Library update failed")
                     return@runWriteAction

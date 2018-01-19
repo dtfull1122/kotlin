@@ -15,8 +15,8 @@ val GRADLE_SYSTEM_ID = ProjectSystemId("GRADLE")
 
 fun isExternalLibrary(library: Library): Boolean {
     return ExternalSystemApiUtil.isExternalSystemLibrary(library, ProjectSystemId.IDE) ||
-           ExternalSystemApiUtil.isExternalSystemLibrary(library, GRADLE_SYSTEM_ID) ||
-           ExternalSystemApiUtil.isExternalSystemLibrary(library, MAVEN_SYSTEM_ID)
+            ExternalSystemApiUtil.isExternalSystemLibrary(library, GRADLE_SYSTEM_ID) ||
+            ExternalSystemApiUtil.isExternalSystemLibrary(library, MAVEN_SYSTEM_ID)
 }
 
 
