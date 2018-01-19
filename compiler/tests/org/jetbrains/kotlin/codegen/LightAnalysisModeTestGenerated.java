@@ -5493,12 +5493,6 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
             doTest(fileName);
         }
 
-        @TestMetadata("crossinlineLambdaParameter.kt")
-        public void testCrossinlineLambdaParameter() throws Exception {
-            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/crossinlineLambdaParameter.kt");
-            doTest(fileName);
-        }
-
         @TestMetadata("defaultParametersInSuspend.kt")
         public void testDefaultParametersInSuspend() throws Exception {
             String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/defaultParametersInSuspend.kt");
@@ -6017,6 +6011,63 @@ public class LightAnalysisModeTestGenerated extends AbstractLightAnalysisModeTes
             @TestMetadata("tailrec.kt")
             public void testTailrec() throws Exception {
                 String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/featureIntersection/tailrec.kt");
+                doTest(fileName);
+            }
+        }
+
+        @TestMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline")
+        @TestDataPath("$PROJECT_ROOT")
+        @RunWith(JUnit3RunnerWithInners.class)
+        public static class InlineCrossinline extends AbstractLightAnalysisModeTest {
+            public void testAllFilesPresentInInlineCrossinline() throws Exception {
+                KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("compiler/testData/codegen/box/coroutines/inlineCrossinline"), Pattern.compile("^(.+)\\.kt$"), TargetBackend.JVM, true);
+            }
+
+            @TestMetadata("inlineOrdinaryOfCrossinlineOrdinary.kt")
+            public void testInlineOrdinaryOfCrossinlineOrdinary() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineOrdinaryOfCrossinlineOrdinary.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("inlineOrdinaryOfCrossinlineSuspend.kt")
+            public void testInlineOrdinaryOfCrossinlineSuspend() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineOrdinaryOfCrossinlineSuspend.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("inlineOrdinaryOfOrdinary.kt")
+            public void testInlineOrdinaryOfOrdinary() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineOrdinaryOfOrdinary.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("inlineOrdinaryOfSuspend.kt")
+            public void testInlineOrdinaryOfSuspend() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineOrdinaryOfSuspend.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("inlineSuspendOfCrossinlineOrdinary.kt")
+            public void testInlineSuspendOfCrossinlineOrdinary() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineSuspendOfCrossinlineOrdinary.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("inlineSuspendOfCrossinlineSuspend.kt")
+            public void testInlineSuspendOfCrossinlineSuspend() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineSuspendOfCrossinlineSuspend.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("inlineSuspendOfOrdinary.kt")
+            public void testInlineSuspendOfOrdinary() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineSuspendOfOrdinary.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("inlineSuspendOfSuspend.kt")
+            public void testInlineSuspendOfSuspend() throws Exception {
+                String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/codegen/box/coroutines/inlineCrossinline/inlineSuspendOfSuspend.kt");
                 doTest(fileName);
             }
         }

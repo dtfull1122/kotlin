@@ -4,20 +4,25 @@ import helpers.*
 import kotlin.coroutines.experimental.*
 import kotlin.coroutines.experimental.intrinsics.*
 
+// suspend calls possible inside lambda matching to the parameter
+// TODO: FORBID
+
 fun builder(c: suspend () -> Unit) {
     c.startCoroutine(EmptyContinuation)
 }
 
-inline fun schedule(crossinline runner: suspend () -> Unit)  {
+inline fun test(noinline c: suspend () -> Unit) {
     builder {
-        runner()
+        c()
     }
 }
 
-fun box(): String {
+suspend fun calculate() = "OK"
+
+fun box() : String {
     var res = "FAIL"
-    schedule {
-        res = "OK"
+    test {
+        res = calculate()
     }
     return res
 }

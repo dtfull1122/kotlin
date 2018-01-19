@@ -55,7 +55,7 @@ public class InlineUtil {
     }
 
     public static boolean isPropertyWithAllAccessorsAreInline(@NotNull DeclarationDescriptor descriptor) {
-        if (!(descriptor instanceof PropertyDescriptor))  return false;
+        if (!(descriptor instanceof PropertyDescriptor)) return false;
 
         PropertyGetterDescriptor getter = ((PropertyDescriptor) descriptor).getGetter();
         if (getter == null || !getter.isInline()) return false;
@@ -191,7 +191,8 @@ public class InlineUtil {
 
     public static boolean allowsNonLocalReturns(@NotNull CallableDescriptor lambda) {
         if (lambda instanceof ValueParameterDescriptor) {
-            if (((ValueParameterDescriptor) lambda).isCrossinline()) {
+            ValueParameterDescriptor parameter = (ValueParameterDescriptor) lambda;
+            if (parameter.isCrossinline() && !FunctionTypesKt.isSuspendFunctionType(parameter.getType())) {
                 //annotated
                 return false;
             }

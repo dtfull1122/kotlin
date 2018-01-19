@@ -1,0 +1,31 @@
+package
+
+public fun box(): kotlin.String
+public fun builder(/*0*/ c: suspend () -> kotlin.Unit): kotlin.Unit
+public inline fun test1(/*0*/ crossinline c: () -> kotlin.Unit): kotlin.Unit
+public inline fun test2(/*0*/ crossinline c: () -> kotlin.Unit): kotlin.Unit
+
+package helpers {
+    public fun handleExceptionContinuation(/*0*/ x: (kotlin.Throwable) -> kotlin.Unit): kotlin.coroutines.experimental.Continuation<kotlin.Any?>
+    public fun </*0*/ T> handleResultContinuation(/*0*/ x: (T) -> kotlin.Unit): kotlin.coroutines.experimental.Continuation<T>
+
+    public open class EmptyContinuation : kotlin.coroutines.experimental.Continuation<kotlin.Any?> {
+        public constructor EmptyContinuation(/*0*/ context: kotlin.coroutines.experimental.CoroutineContext = ...)
+        public open override /*1*/ val context: kotlin.coroutines.experimental.CoroutineContext
+        public open override /*1*/ /*fake_override*/ fun equals(/*0*/ other: kotlin.Any?): kotlin.Boolean
+        public open override /*1*/ /*fake_override*/ fun hashCode(): kotlin.Int
+        public open override /*1*/ fun resume(/*0*/ data: kotlin.Any?): kotlin.Unit
+        public open override /*1*/ fun resumeWithException(/*0*/ exception: kotlin.Throwable): kotlin.Unit
+        public open override /*1*/ /*fake_override*/ fun toString(): kotlin.String
+
+        public companion object Companion : helpers.EmptyContinuation {
+            private constructor Companion()
+            public open override /*1*/ /*fake_override*/ val context: kotlin.coroutines.experimental.CoroutineContext
+            public open override /*1*/ /*fake_override*/ fun equals(/*0*/ other: kotlin.Any?): kotlin.Boolean
+            public open override /*1*/ /*fake_override*/ fun hashCode(): kotlin.Int
+            public open override /*1*/ /*fake_override*/ fun resume(/*0*/ data: kotlin.Any?): kotlin.Unit
+            public open override /*1*/ /*fake_override*/ fun resumeWithException(/*0*/ exception: kotlin.Throwable): kotlin.Unit
+            public open override /*1*/ /*fake_override*/ fun toString(): kotlin.String
+        }
+    }
+}
