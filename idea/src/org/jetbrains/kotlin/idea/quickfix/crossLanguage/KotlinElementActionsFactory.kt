@@ -244,10 +244,14 @@ class KotlinElementActionsFactory : JvmElementActionsFactory() {
 
         val modifier = request.modifier
         val shouldPresent = request.shouldPresent
-        val (kToken, shouldPresentMapped) = if (JvmModifier.FINAL == modifier)
-            KtTokens.OPEN_KEYWORD to !shouldPresent
-        else
-            javaPsiModifiersMapping[modifier] to shouldPresent
+        val (kToken, shouldPresentMapped) = when {
+            modifier == JvmModifier.FINAL -> KtTokens.OPEN_KEYWORD to !shouldPresent
+            modifier == JvmModifier.PUBLIC && shouldPresent ->
+                listOf(KtTokens.PROTECTED_KEYWORD, KtTokens.PRIVATE_KEYWORD, KtTokens.INTERNAL_KEYWORD)
+                    .find { kModifierOwner.hasModifier(it) }
+                    ?.let { it to false } ?: return emptyList()
+            else -> javaPsiModifiersMapping[modifier] to shouldPresent
+        }
         if (kToken == null) return emptyList()
 
         val action = if (shouldPresentMapped)
