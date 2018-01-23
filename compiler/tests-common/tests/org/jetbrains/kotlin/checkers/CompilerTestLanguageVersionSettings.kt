@@ -24,6 +24,7 @@ import java.util.*
 import java.util.regex.Pattern
 
 const val LANGUAGE_DIRECTIVE = "LANGUAGE"
+const val JVM_TARGET = "JVM_TARGET"
 const val API_VERSION_DIRECTIVE = "API_VERSION"
 
 data class CompilerTestLanguageVersionSettings(
